@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medical Symptom Checker</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">🩺 Symptom Checker</div>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/blog">Blog</a>
+      <a href="/contact">Contact</a>
+      <a href="/developer">Developer</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+      <h1>Check Your Symptoms</h1>
+      <p>Enter symptoms separated by commas (e.g., itching, headache)</p>
+      <form action="/predict" method="post">
+        <input type="text" name="symptoms" placeholder="Type your symptoms here..." required>
+        <button type="submit">Predict Disease</button>
+      </form>
+    </section>
+
+    {% if predicted_disease %}
+    <section class="results">
+      <h2>Prediction Result</h2>
+      <div class="card disease">
+        <h3>{{ predicted_disease }}</h3>
+        <p>{{ dis_desc }}</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h4>🛡️ Precautions</h4>
+          <ul>
+            {% for p in dis_pre %}
+              <li>{{ p }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>💊 Medications</h4>
+          <ul>
+            {% for m in dis_med %}
+              <li>{{ m }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>🥗 Diet</h4>
+          <ul>
+            {% for d in dis_diet %}
+              <li>{{ d }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="card">
+          <h4>🏋️ Workouts</h4>
+          <ul>
+            {% for w in dis_wrkout %}
+              <li>{{ w }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+  </main>
+
+  <footer>
+    <p>© 2025 Symptom Checker | Built with Flask & ML</p>
+  </footer>
+</body>
+</html>
